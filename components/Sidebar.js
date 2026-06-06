@@ -35,12 +35,19 @@ const icons = {
       <path d="M9 13h6M9 16.5h6" />
     </svg>
   ),
+  tags: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2.5H4v8l9.5 9.5a1.5 1.5 0 0 0 2.1 0l4.4-4.4a1.5 1.5 0 0 0 0-2.1L12 2.5z" />
+      <circle cx="8" cy="6.5" r="1.3" />
+    </svg>
+  ),
 };
 
 const NAV = [
   { href: "/", label: "Dashboard", icon: "dashboard", exact: true },
   { href: "/employees", label: "Employees", icon: "users" },
   { href: "/new", label: "Add employee", icon: "add" },
+  { href: "/settings", label: "Departments & Roles", icon: "tags" },
 ];
 
 export default function Sidebar() {

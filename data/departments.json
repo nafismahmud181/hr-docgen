@@ -1,0 +1,19 @@
+[
+  {
+    "id": "d8c86a9e-f705-4c05-8291-5b004b34fbdf",
+    "name": "Quality Assurance",
+    "createdAt": "2026-06-06T09:42:04.912Z",
+    "roles": [
+      {
+        "id": "02a1f9d7-e528-4d32-9a7b-28a332e12df0",
+        "name": "QA Analyst",
+        "createdAt": "2026-06-06T09:42:17.926Z"
+      },
+      {
+        "id": "f0d6e178-fc4f-4007-9f30-692c305bc535",
+        "name": "QA Lead",
+        "createdAt": "2026-06-06T09:42:23.748Z"
+      }
+    ]
+  }
+]
