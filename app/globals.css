@@ -561,6 +561,22 @@ nav { display: flex; gap: 10px; align-items: center; }
 }
 .share-link-row .btn { padding: 10px 18px; }
 
+/* ── Shared links list (profile) ── */
+.share-list { list-style: none; display: flex; flex-direction: column; }
+.share-list li + li { border-top: 1px solid var(--line); }
+.share-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 2px;
+  flex-wrap: wrap;
+}
+.share-row-title { font-weight: 700; font-size: 14px; }
+.share-row-meta { color: var(--ink-faint); font-size: 12.5px; margin-top: 2px; }
+.share-row-actions { display: flex; gap: 14px; align-items: center; }
+.btn-link.danger { color: var(--bad); }
+
 /* ── Public share download page ── */
 .bare-main { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
 .share-wrap { width: min(440px, 100%); }

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getEmployee, getCompany, getTemplates } from "@/lib/db";
+import { getEmployee, getCompany, getTemplates, getSharesForEmployee } from "@/lib/db";
 import DocGenerator from "@/components/DocGenerator";
+import SharedLinks from "@/components/SharedLinks";
 import { formatDate, formatMoney } from "@/lib/templates";
 
 export const dynamic = "force-dynamic";
@@ -37,7 +38,11 @@ function DetailPanel({ title, rows, always }) {
 export default async function EmployeePage({ params }) {
   const emp = await getEmployee(params.id);
   if (!emp) notFound();
-  const [company, templates] = await Promise.all([getCompany(), getTemplates()]);
+  const [company, templates, shares] = await Promise.all([
+    getCompany(),
+    getTemplates(),
+    getSharesForEmployee(emp.id),
+  ]);
 
   const details = [
     ["Employee ID", emp.employeeCode],
@@ -92,6 +97,8 @@ export default async function EmployeePage({ params }) {
       <DetailPanel title="Profile" rows={details} />
       <DetailPanel title="Personal bank account" rows={personalBank} always />
       <DetailPanel title="Payroll bank account" rows={payrollBank} always />
+
+      <SharedLinks shares={shares} />
 
       <DocGenerator employee={emp} company={company} templates={templates} />
     </>

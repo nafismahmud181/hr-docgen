@@ -143,6 +143,7 @@ export default function DocGenerator({ employee, company, templates }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to create share link.");
       setShareUrl(`${window.location.origin}/share/${data.id}`);
+      router.refresh(); // surface the new link in the "Shared links" list
     } catch (err) {
       setError(err.message);
     } finally {
