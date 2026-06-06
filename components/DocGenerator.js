@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { buildDocument, formatDate, DOC_TYPES } from "@/lib/templates";
 
-export default function DocGenerator({ employee, company }) {
+export default function DocGenerator({ employee, company, templates }) {
   const router = useRouter();
   const [selected, setSelected] = useState("loe");
   const [purpose, setPurpose] = useState("");
@@ -23,11 +23,11 @@ export default function DocGenerator({ employee, company }) {
   // preview matches the generated document exactly.
   const autoDoc = useMemo(() => {
     try {
-      return buildDocument(selected, employee, { purpose, company });
+      return buildDocument(selected, employee, { purpose, company, template: templates?.[selected] });
     } catch {
       return null;
     }
-  }, [selected, employee, purpose, company]);
+  }, [selected, employee, purpose, company, templates]);
 
   // What the preview shows: the edited copy if present, else the live template.
   const doc = edited || autoDoc;

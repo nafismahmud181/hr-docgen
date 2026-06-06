@@ -47,6 +47,7 @@ const NAV = [
   { href: "/", label: "Dashboard", icon: "dashboard", exact: true },
   { href: "/employees", label: "Employees", icon: "users" },
   { href: "/new", label: "Add employee", icon: "add" },
+  { href: "/templates", label: "Templates", icon: "doc" },
   { href: "/settings", label: "Settings", icon: "tags" },
 ];
 
