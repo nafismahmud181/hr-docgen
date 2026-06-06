@@ -101,22 +101,7 @@ body {
   .app-main { margin-left: 0; }
 }
 
-/* ── Top bar ── */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 36px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(245, 243, 238, 0.85);
-  backdrop-filter: blur(6px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
-
+/* ── Brand mark (sidebar + share page) ── */
 .brand-mark {
   width: 38px; height: 38px;
   display: grid; place-items: center;
@@ -127,24 +112,6 @@ body {
   letter-spacing: 1px;
   border-radius: 8px;
 }
-
-.brand-text { font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; }
-.brand-text em { font-style: normal; color: var(--ink-faint); font-weight: 500; margin-left: 6px; }
-
-nav { display: flex; gap: 10px; align-items: center; }
-
-.nav-link {
-  text-decoration: none;
-  color: var(--ink-soft);
-  font-size: 14px;
-  font-weight: 600;
-  padding: 8px 14px;
-  border-radius: 999px;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.nav-link:hover { background: #ebe7dd; color: var(--ink); }
-.nav-cta { background: var(--accent-ink); color: #f5f3ee; }
-.nav-cta:hover { background: var(--accent); color: #fff; }
 
 /* ── Layout ── */
 .container { width: min(980px, 92%); margin: 0 auto; padding: 44px 0 80px; flex: 1; }
