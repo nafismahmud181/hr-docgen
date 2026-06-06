@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "PowerShell(Remove-Item *)",
-      "PowerShell(Stop-Job *)"
+      "PowerShell(Stop-Job *)",
+      "PowerShell(Get-Process *)"
     ]
   }
 }

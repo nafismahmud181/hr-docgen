@@ -13,8 +13,8 @@ function initials(name) {
     .toUpperCase();
 }
 
-export default function EmployeesPage() {
-  const employees = getEmployees();
+export default async function EmployeesPage() {
+  const employees = await getEmployees();
 
   return (
     <>

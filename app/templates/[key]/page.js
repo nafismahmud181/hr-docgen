@@ -6,10 +6,10 @@ import TemplateEditor from "@/components/TemplateEditor";
 
 export const dynamic = "force-dynamic";
 
-export default function TemplateEditPage({ params }) {
+export default async function TemplateEditPage({ params }) {
   const type = DOC_TYPES.find((t) => t.key === params.key);
   if (!type) notFound();
-  const template = getTemplate(params.key);
+  const template = await getTemplate(params.key);
 
   return (
     <>

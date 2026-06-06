@@ -84,8 +84,8 @@ function DonutCard({ title, segments, centerLabel }) {
   );
 }
 
-export default function DashboardPage() {
-  const employees = getEmployees();
+export default async function DashboardPage() {
+  const employees = await getEmployees();
   const now = new Date();
 
   const departments = breakdown(employees, "department", "Unassigned");

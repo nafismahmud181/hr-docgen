@@ -70,7 +70,7 @@ export async function POST(request) {
       valid.push(emp);
     });
 
-    const created = valid.length ? createEmployees(valid) : [];
+    const created = valid.length ? await createEmployees(valid) : [];
     return NextResponse.json({ created: created.length, skipped: errors.length, errors });
   } catch (err) {
     console.error(err);

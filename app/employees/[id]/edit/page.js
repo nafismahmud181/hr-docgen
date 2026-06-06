@@ -5,10 +5,10 @@ import EmployeeForm from "@/components/EmployeeForm";
 
 export const dynamic = "force-dynamic";
 
-export default function EditEmployeePage({ params }) {
-  const emp = getEmployee(params.id);
+export default async function EditEmployeePage({ params }) {
+  const emp = await getEmployee(params.id);
   if (!emp) notFound();
-  const departments = getDepartments();
+  const departments = await getDepartments();
 
   return (
     <>

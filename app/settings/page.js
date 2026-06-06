@@ -4,9 +4,8 @@ import SettingsTabs from "@/components/SettingsTabs";
 
 export const dynamic = "force-dynamic";
 
-export default function SettingsPage() {
-  const departments = getDepartments();
-  const company = getCompany();
+export default async function SettingsPage() {
+  const [departments, company] = await Promise.all([getDepartments(), getCompany()]);
 
   return (
     <>

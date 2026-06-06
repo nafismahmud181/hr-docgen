@@ -4,8 +4,8 @@ import { getDepartments } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
-export default function NewEmployeePage() {
-  const departments = getDepartments();
+export default async function NewEmployeePage() {
+  const departments = await getDepartments();
   return (
     <>
       <Link href="/employees" className="back-link">← All employees</Link>

@@ -33,11 +33,10 @@ function DetailPanel({ title, rows }) {
   );
 }
 
-export default function EmployeePage({ params }) {
-  const emp = getEmployee(params.id);
+export default async function EmployeePage({ params }) {
+  const emp = await getEmployee(params.id);
   if (!emp) notFound();
-  const company = getCompany();
-  const templates = getTemplates();
+  const [company, templates] = await Promise.all([getCompany(), getTemplates()]);
 
   const details = [
     ["Employee ID", emp.employeeCode],

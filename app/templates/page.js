@@ -4,8 +4,8 @@ import { DOC_TYPES } from "@/lib/templates";
 
 export const dynamic = "force-dynamic";
 
-export default function TemplatesPage() {
-  const templates = getTemplates();
+export default async function TemplatesPage() {
+  const templates = await getTemplates();
 
   return (
     <>

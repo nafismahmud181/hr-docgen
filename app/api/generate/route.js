@@ -9,7 +9,7 @@ export async function POST(request) {
   try {
     const { employeeId, docType, purpose, issueDate, override } = await request.json();
 
-    const employee = getEmployee(employeeId);
+    const employee = await getEmployee(employeeId);
     if (!employee) {
       return NextResponse.json({ error: "Employee not found." }, { status: 404 });
     }

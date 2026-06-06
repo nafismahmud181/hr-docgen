@@ -4,7 +4,7 @@ import { getEmployees, createEmployee } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  return NextResponse.json(getEmployees());
+  return NextResponse.json(await getEmployees());
 }
 
 export async function POST(request) {
@@ -15,6 +15,6 @@ export async function POST(request) {
       { status: 400 }
     );
   }
-  const employee = createEmployee(data);
+  const employee = await createEmployee(data);
   return NextResponse.json(employee, { status: 201 });
 }
