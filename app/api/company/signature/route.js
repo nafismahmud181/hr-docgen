@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { saveSignature, deleteSignature, getSignatureImage } from "@/lib/db";
+import { storageGuard, serverError } from "@/lib/apiHelpers";
 
 export const dynamic = "force-dynamic";
 
@@ -13,12 +14,24 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const { dataUrl } = await request.json();
-  const result = await saveSignature(dataUrl);
-  if (result.error) return NextResponse.json({ error: result.error }, { status: 400 });
-  return NextResponse.json(result.company);
+  const blocked = storageGuard();
+  if (blocked) return blocked;
+  try {
+    const { dataUrl } = await request.json();
+    const result = await saveSignature(dataUrl);
+    if (result.error) return NextResponse.json({ error: result.error }, { status: 400 });
+    return NextResponse.json(result.company);
+  } catch (err) {
+    return serverError(err, "Failed to upload signature.");
+  }
 }
 
 export async function DELETE() {
-  return NextResponse.json(await deleteSignature());
+  const blocked = storageGuard();
+  if (blocked) return blocked;
+  try {
+    return NextResponse.json(await deleteSignature());
+  } catch (err) {
+    return serverError(err, "Failed to remove signature.");
+  }
 }

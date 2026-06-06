@@ -15,17 +15,18 @@ function initials(name) {
     .toUpperCase();
 }
 
-function DetailPanel({ title, rows }) {
+function DetailPanel({ title, rows, always }) {
   const filled = rows.filter(([, v]) => v);
-  if (filled.length === 0) return null;
+  if (filled.length === 0 && !always) return null;
+  const shown = always ? rows : filled;
   return (
     <div className="panel">
       <h2>{title}</h2>
       <dl className="detail-grid">
-        {filled.map(([label, value]) => (
+        {shown.map(([label, value]) => (
           <div className="detail" key={label}>
             <dt>{label}</dt>
-            <dd>{value}</dd>
+            <dd>{value || "—"}</dd>
           </div>
         ))}
       </dl>
@@ -89,8 +90,8 @@ export default async function EmployeePage({ params }) {
       </div>
 
       <DetailPanel title="Profile" rows={details} />
-      <DetailPanel title="Personal bank account" rows={personalBank} />
-      <DetailPanel title="Payroll bank account" rows={payrollBank} />
+      <DetailPanel title="Personal bank account" rows={personalBank} always />
+      <DetailPanel title="Payroll bank account" rows={payrollBank} always />
 
       <DocGenerator employee={emp} company={company} templates={templates} />
     </>

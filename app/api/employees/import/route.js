@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import * as XLSX from "xlsx";
 import { createEmployees } from "@/lib/db";
 import { resolveField } from "@/lib/employeeColumns";
-import { isPersistentStorageReady } from "@/lib/store";
+import { storageGuard, serverError } from "@/lib/apiHelpers";
 
 export const dynamic = "force-dynamic";
 
@@ -33,15 +33,8 @@ function normalizeValue(field, value) {
 }
 
 export async function POST(request) {
-  if (!isPersistentStorageReady()) {
-    return NextResponse.json(
-      {
-        error:
-          "Storage isn't configured on the server. Create a Vercel Blob store, connect it to this project, then redeploy.",
-      },
-      { status: 503 }
-    );
-  }
+  const blocked = storageGuard();
+  if (blocked) return blocked;
 
   try {
     const form = await request.formData();
@@ -84,10 +77,6 @@ export async function POST(request) {
     const created = valid.length ? await createEmployees(valid) : [];
     return NextResponse.json({ created: created.length, skipped: errors.length, errors });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { error: "Failed to import employees.", detail: String(err?.message || err) },
-      { status: 500 }
-    );
+    return serverError(err, "Failed to import employees.");
   }
 }

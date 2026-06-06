@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCompany, saveCompany } from "@/lib/db";
+import { storageGuard, serverError } from "@/lib/apiHelpers";
 
 export const dynamic = "force-dynamic";
 
@@ -8,7 +9,13 @@ export async function GET() {
 }
 
 export async function PUT(request) {
-  const data = await request.json();
-  const company = await saveCompany(data);
-  return NextResponse.json(company);
+  const blocked = storageGuard();
+  if (blocked) return blocked;
+  try {
+    const data = await request.json();
+    const company = await saveCompany(data);
+    return NextResponse.json(company);
+  } catch (err) {
+    return serverError(err, "Failed to save settings.");
+  }
 }
