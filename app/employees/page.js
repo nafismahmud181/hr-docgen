@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getEmployees } from "@/lib/db";
+import EmployeeBulkUpload from "@/components/EmployeeBulkUpload";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,8 @@ export default function EmployeesPage() {
       <p className="page-sub">
         Select an employee to view their profile and generate official documents on the company pad.
       </p>
+
+      <EmployeeBulkUpload />
 
       {employees.length === 0 ? (
         <div className="empty-state">

@@ -15,6 +15,24 @@ function initials(name) {
     .toUpperCase();
 }
 
+function DetailPanel({ title, rows }) {
+  const filled = rows.filter(([, v]) => v);
+  if (filled.length === 0) return null;
+  return (
+    <div className="panel">
+      <h2>{title}</h2>
+      <dl className="detail-grid">
+        {filled.map(([label, value]) => (
+          <div className="detail" key={label}>
+            <dt>{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
 export default function EmployeePage({ params }) {
   const emp = getEmployee(params.id);
   if (!emp) notFound();
@@ -31,7 +49,25 @@ export default function EmployeePage({ params }) {
     ["Email", emp.email],
     ["Phone", emp.phone],
     ["Address", emp.address],
-  ].filter(([, v]) => v);
+  ];
+
+  const personalBank = [
+    ["Account holder", emp.personalAccountHolder],
+    ["Account number", emp.personalAccountNumber],
+    ["Bank name", emp.personalBankName],
+    ["Routing number", emp.personalRoutingNumber],
+    ["Branch name", emp.personalBranchName],
+    ["Bank city", emp.personalBankCity],
+    ["Swift code", emp.personalSwiftCode],
+    ["Bank A/C contact", emp.personalBankContact],
+  ];
+
+  const payrollBank = [
+    ["Account holder", emp.payrollAccountHolder],
+    ["Account number", emp.payrollAccountNumber],
+  ];
+
+  const status = emp.status || "Present";
 
   return (
     <>
@@ -41,7 +77,10 @@ export default function EmployeePage({ params }) {
         <div className="profile-avatar">{initials(emp.name)}</div>
         <div>
           <div className="profile-name">{emp.name}</div>
-          <div className="profile-role">{emp.designation}</div>
+          <div className="profile-role">
+            {emp.designation}
+            <span className={`status-badge status-${status.toLowerCase()}`}>{status}</span>
+          </div>
         </div>
         <div style={{ marginLeft: "auto" }}>
           <Link href={`/employees/${emp.id}/edit`} className="btn btn-ghost" style={{ textDecoration: "none" }}>
@@ -50,17 +89,9 @@ export default function EmployeePage({ params }) {
         </div>
       </div>
 
-      <div className="panel">
-        <h2>Profile</h2>
-        <dl className="detail-grid">
-          {details.map(([label, value]) => (
-            <div className="detail" key={label}>
-              <dt>{label}</dt>
-              <dd>{value}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
+      <DetailPanel title="Profile" rows={details} />
+      <DetailPanel title="Personal bank account" rows={personalBank} />
+      <DetailPanel title="Payroll bank account" rows={payrollBank} />
 
       <DocGenerator employee={emp} company={company} templates={templates} />
     </>

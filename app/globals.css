@@ -310,6 +310,17 @@ nav { display: flex; gap: 10px; align-items: center; }
 }
 .doctype-label { font-size: 14px; font-weight: 600; }
 
+/* ── Bulk upload ── */
+.upload-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+}
+.upload-copy { flex: 1; min-width: 240px; }
+.upload-copy .hint { max-width: 560px; }
+
 /* ── Employee list ── */
 .emp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 
@@ -393,6 +404,31 @@ nav { display: flex; gap: 10px; align-items: center; }
 }
 .hint { font-size: 12px; color: var(--ink-faint); }
 .hint a { color: var(--accent); font-weight: 600; }
+
+.form-section {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 26px 0 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+/* Employment status badge */
+.status-badge {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  vertical-align: middle;
+}
+.status-present { background: #e7f5ee; color: var(--good); }
+.status-resigned { background: #fef3e2; color: #b9791f; }
+.status-fired { background: #fbe9e7; color: var(--bad); }
 .field-link { align-self: flex-start; font-size: 12px; padding: 2px 0; }
 
 /* ── Buttons ── */

@@ -11,12 +11,25 @@ const EMPTY = {
   designation: "",
   department: "",
   employmentType: "Permanent, full-time",
+  status: "Present",
   joiningDate: "",
   lastWorkingDate: "",
   salary: "",
   email: "",
   phone: "",
   address: "",
+  // Personal bank account
+  personalAccountHolder: "",
+  personalAccountNumber: "",
+  personalBankName: "",
+  personalRoutingNumber: "",
+  personalBranchName: "",
+  personalBankCity: "",
+  personalSwiftCode: "",
+  personalBankContact: "",
+  // Payroll bank account
+  payrollAccountHolder: "",
+  payrollAccountNumber: "",
 };
 
 const OTHER = "__other__";
@@ -191,6 +204,14 @@ export default function EmployeeForm({ employee, departments = [] }) {
           </select>
         </div>
         <div className="field">
+          <label>Status</label>
+          <select value={form.status} onChange={set("status")}>
+            <option value="Present">Present</option>
+            <option value="Fired">Fired</option>
+            <option value="Resigned">Resigned</option>
+          </select>
+        </div>
+        <div className="field">
           <label>Joining date</label>
           <input type="date" value={form.joiningDate} onChange={set("joiningDate")} />
         </div>
@@ -215,6 +236,54 @@ export default function EmployeeForm({ employee, departments = [] }) {
         <div className="field full">
           <label>Address</label>
           <input value={form.address} onChange={set("address")} />
+        </div>
+      </div>
+
+      <h3 className="form-section">Personal bank account</h3>
+      <div className="form-grid">
+        <div className="field">
+          <label>Account holder name</label>
+          <input value={form.personalAccountHolder} onChange={set("personalAccountHolder")} />
+        </div>
+        <div className="field">
+          <label>Bank account number</label>
+          <input value={form.personalAccountNumber} onChange={set("personalAccountNumber")} />
+        </div>
+        <div className="field">
+          <label>Bank name</label>
+          <input value={form.personalBankName} onChange={set("personalBankName")} />
+        </div>
+        <div className="field">
+          <label>Routing number</label>
+          <input value={form.personalRoutingNumber} onChange={set("personalRoutingNumber")} />
+        </div>
+        <div className="field">
+          <label>Branch name</label>
+          <input value={form.personalBranchName} onChange={set("personalBranchName")} />
+        </div>
+        <div className="field">
+          <label>Bank city name</label>
+          <input value={form.personalBankCity} onChange={set("personalBankCity")} />
+        </div>
+        <div className="field">
+          <label>Swift code</label>
+          <input value={form.personalSwiftCode} onChange={set("personalSwiftCode")} />
+        </div>
+        <div className="field">
+          <label>Bank A/C contact number</label>
+          <input value={form.personalBankContact} onChange={set("personalBankContact")} />
+        </div>
+      </div>
+
+      <h3 className="form-section">Payroll bank account</h3>
+      <div className="form-grid">
+        <div className="field">
+          <label>Account holder name</label>
+          <input value={form.payrollAccountHolder} onChange={set("payrollAccountHolder")} />
+        </div>
+        <div className="field">
+          <label>Bank account number</label>
+          <input value={form.payrollAccountNumber} onChange={set("payrollAccountNumber")} />
         </div>
       </div>
 
