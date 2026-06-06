@@ -176,7 +176,7 @@ export default function EmployeeForm({ employee, departments = [] }) {
           {noRolesForDept && (
             <span className="hint">
               No roles defined for {form.department}. Pick “Other…” to type one, or add roles in{" "}
-              <Link href="/settings">Departments &amp; Roles</Link>.
+              <Link href="/settings">Settings</Link>.
             </span>
           )}
         </div>

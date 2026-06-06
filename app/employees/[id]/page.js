@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getEmployee } from "@/lib/db";
+import { getEmployee, getCompany } from "@/lib/db";
 import DocGenerator from "@/components/DocGenerator";
 import { formatDate, formatMoney } from "@/lib/templates";
 
@@ -18,6 +18,7 @@ function initials(name) {
 export default function EmployeePage({ params }) {
   const emp = getEmployee(params.id);
   if (!emp) notFound();
+  const company = getCompany();
 
   const details = [
     ["Employee ID", emp.employeeCode],
@@ -60,7 +61,7 @@ export default function EmployeePage({ params }) {
         </dl>
       </div>
 
-      <DocGenerator employee={emp} />
+      <DocGenerator employee={emp} company={company} />
     </>
   );
 }

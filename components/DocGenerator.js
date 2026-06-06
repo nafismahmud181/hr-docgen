@@ -2,10 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { buildDocument, buildRefNumber, formatDate, DOC_TYPES } from "@/lib/templates";
-import { company } from "@/lib/config";
+import { buildDocument, formatDate, DOC_TYPES } from "@/lib/templates";
 
-export default function DocGenerator({ employee }) {
+export default function DocGenerator({ employee, company }) {
   const router = useRouter();
   const [selected, setSelected] = useState("loe");
   const [purpose, setPurpose] = useState("");
@@ -24,13 +23,11 @@ export default function DocGenerator({ employee }) {
   // preview matches the generated document exactly.
   const autoDoc = useMemo(() => {
     try {
-      return buildDocument(selected, employee, { purpose });
+      return buildDocument(selected, employee, { purpose, company });
     } catch {
       return null;
     }
-  }, [selected, employee, purpose]);
-
-  const refNo = useMemo(() => buildRefNumber(selected, employee), [selected, employee]);
+  }, [selected, employee, purpose, company]);
 
   // What the preview shows: the edited copy if present, else the live template.
   const doc = edited || autoDoc;
@@ -185,7 +182,7 @@ export default function DocGenerator({ employee }) {
         ) : (
           <article className="letter-preview">
             <div className="lp-head">
-              <span>Ref: {refNo}</span>
+              <span />
               <span>Date: {formatDate(issueDate)}</span>
             </div>
 
@@ -245,10 +242,21 @@ export default function DocGenerator({ employee }) {
               ) : (
                 <div className="lp-closing">{doc.closing}</div>
               )}
-              <div className="lp-sign-space" />
+              {company.signature ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  className="lp-sign-img"
+                  src={`/api/company/signature?v=${company.signature.updatedAt}`}
+                  alt="Signature"
+                />
+              ) : (
+                <div className="lp-sign-space" />
+              )}
               <div className="lp-sign-name">{company.signatory.name}</div>
               <div className="lp-sign-meta">{company.signatory.title}</div>
               <div className="lp-sign-meta">{company.name}</div>
+              {company.email && <div className="lp-sign-meta">{company.email}</div>}
+              {company.website && <div className="lp-sign-meta">{company.website}</div>}
             </div>
           </article>
         )}

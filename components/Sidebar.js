@@ -47,7 +47,7 @@ const NAV = [
   { href: "/", label: "Dashboard", icon: "dashboard", exact: true },
   { href: "/employees", label: "Employees", icon: "users" },
   { href: "/new", label: "Add employee", icon: "add" },
-  { href: "/settings", label: "Departments & Roles", icon: "tags" },
+  { href: "/settings", label: "Settings", icon: "tags" },
 ];
 
 export default function Sidebar() {

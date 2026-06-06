@@ -1,21 +1,22 @@
 import Link from "next/link";
-import { getDepartments } from "@/lib/db";
-import TaxonomyManager from "@/components/TaxonomyManager";
+import { getDepartments, getCompany } from "@/lib/db";
+import SettingsTabs from "@/components/SettingsTabs";
 
 export const dynamic = "force-dynamic";
 
 export default function SettingsPage() {
   const departments = getDepartments();
+  const company = getCompany();
 
   return (
     <>
       <Link href="/" className="back-link">← Dashboard</Link>
-      <h1 className="page-title">Departments &amp; Roles</h1>
+      <h1 className="page-title">Settings</h1>
       <p className="page-sub">
-        Add departments, then add the roles that belong to each one.
+        Manage departments and roles, and the signatory shown on generated documents.
       </p>
 
-      <TaxonomyManager departments={departments} />
+      <SettingsTabs departments={departments} company={company} />
     </>
   );
 }
