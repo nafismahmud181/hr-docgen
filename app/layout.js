@@ -1,5 +1,5 @@
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import AppFrame from "@/components/AppFrame";
 
 export const metadata = {
   title: "Inteliweave · HR Documents",
@@ -18,15 +18,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <div className="app-shell">
-          <Sidebar />
-          <div className="app-main">
-            <main className="content">{children}</main>
-            <footer className="footer">
-              Documents are generated on the official Inteliweave pad · {new Date().getFullYear()}
-            </footer>
-          </div>
-        </div>
+        <AppFrame>{children}</AppFrame>
       </body>
     </html>
   );

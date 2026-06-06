@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getEmployee } from "@/lib/db";
 import { generatePdf } from "@/lib/pdf";
 import { DOC_TYPES } from "@/lib/templates";
+import { serverError } from "@/lib/apiHelpers";
 
 export const dynamic = "force-dynamic";
 
@@ -49,7 +50,6 @@ export async function POST(request) {
       },
     });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: "Failed to generate document." }, { status: 500 });
+    return serverError(err, "Failed to generate document.");
   }
 }

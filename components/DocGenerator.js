@@ -15,6 +15,9 @@ export default function DocGenerator({ employee, company, templates }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
+  const [shareBusy, setShareBusy] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const type = DOC_TYPES.find((t) => t.key === selected);
   const editing = edited !== null;
@@ -105,6 +108,55 @@ export default function DocGenerator({ employee, company, templates }) {
       setError(err.message);
     } finally {
       setBusy(false);
+    }
+  }
+
+  function overridePayload() {
+    return editing
+      ? {
+          title: edited.title,
+          addressee: edited.addressee,
+          paragraphs: edited.paragraphs,
+          closing: edited.closing,
+        }
+      : undefined;
+  }
+
+  async function handleShare() {
+    setError("");
+    setOk("");
+    setShareUrl("");
+    setCopied(false);
+    setShareBusy(true);
+    try {
+      const res = await fetch("/api/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          employeeId: employee.id,
+          docType: selected,
+          purpose,
+          issueDate,
+          override: overridePayload(),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to create share link.");
+      setShareUrl(`${window.location.origin}/share/${data.id}`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setShareBusy(false);
+    }
+  }
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* clipboard blocked; user can copy manually */
     }
   }
 
@@ -268,7 +320,28 @@ export default function DocGenerator({ employee, company, templates }) {
           <button className="btn btn-primary" onClick={handleGenerate} disabled={busy}>
             {busy ? "Generating…" : "Generate PDF"}
           </button>
+          <button className="btn btn-ghost" onClick={handleShare} disabled={shareBusy}>
+            {shareBusy ? "Creating link…" : "Create share link"}
+          </button>
         </div>
+
+        {shareUrl && (
+          <div className="share-link-box">
+            <div className="share-link-label">Shareable download link — send this to the employee:</div>
+            <div className="share-link-row">
+              <input className="share-link-input" readOnly value={shareUrl} onFocus={(e) => e.target.select()} />
+              <button type="button" className="btn btn-primary" onClick={copyLink}>
+                {copied ? "Copied!" : "Copy"}
+              </button>
+              <a className="btn btn-ghost" href={shareUrl} target="_blank" rel="noopener noreferrer">
+                Open
+              </a>
+            </div>
+            <div className="hint" style={{ marginTop: 8 }}>
+              Anyone with this link can download this document. It reflects the text exactly as shown above.
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="btn-row">
